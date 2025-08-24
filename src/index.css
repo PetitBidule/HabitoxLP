@@ -2,28 +2,28 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Micro-Habit Mastery System Design System */
+/* HabitoX System Design System */
 
 @layer base {
   :root {
     /* Professional trust-building color palette */
     --background: 0 0% 100%;
-    --foreground: 215 25% 15%;
+    --foreground: 237 38% 30%;
 
     /* Trust-building blue foundation */
-    --primary: 217 91% 60%;
+    --primary: 237 38% 30%;
     --primary-foreground: 0 0% 100%;
-    --primary-dark: 217 91% 45%;
+    --primary-dark: 237 38% 25%;
     
     /* Success green for achievements */
-    --success: 142 76% 36%;
-    --success-foreground: 0 0% 100%;
-    --success-light: 142 76% 95%;
+    --success: 105 65% 75%;
+    --success-foreground: 237 38% 30%;
+    --success-light: 105 65% 95%;
     
     /* High-converting orange CTA */
-    --cta: 25 95% 53%;
-    --cta-foreground: 0 0% 100%;
-    --cta-hover: 25 95% 45%;
+    --cta: 204 25% 67%;
+    --cta-foreground: 237 38% 30%;
+    --cta-hover: 204 25% 60%;
     
     /* Neutral grays for content */
     --muted: 220 14% 96%;
@@ -43,16 +43,16 @@
     --destructive-foreground: 0 0% 100%;
 
     /* Gradients for visual appeal */
-    --gradient-primary: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(217, 91%, 45%) 100%);
-    --gradient-success: linear-gradient(135deg, hsl(142, 76%, 36%) 0%, hsl(142, 76%, 28%) 100%);
-    --gradient-hero: linear-gradient(135deg, hsl(217, 91%, 60%) 0%, hsl(142, 76%, 36%) 100%);
-    --gradient-subtle: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(217, 91%, 98%) 100%);
+    --gradient-primary: linear-gradient(135deg, hsl(237, 38%, 30%) 0%, hsl(237, 38%, 25%) 100%);
+    --gradient-success: linear-gradient(135deg, hsl(105, 65%, 75%) 0%, hsl(105, 65%, 70%) 100%);
+    --gradient-hero: linear-gradient(135deg, hsl(237, 38%, 30%) 0%, hsl(105, 65%, 75%) 100%);
+    --gradient-subtle: linear-gradient(180deg, hsl(0, 0%, 100%) 0%, hsl(204, 25%, 95%) 100%);
     
     /* Shadows for depth */
-    --shadow-sm: 0 1px 2px 0 hsl(217 91% 60% / 0.05);
-    --shadow-md: 0 4px 6px -1px hsl(217 91% 60% / 0.1), 0 2px 4px -1px hsl(217 91% 60% / 0.06);
-    --shadow-lg: 0 10px 15px -3px hsl(217 91% 60% / 0.1), 0 4px 6px -2px hsl(217 91% 60% / 0.05);
-    --shadow-cta: 0 10px 30px -10px hsl(25 95% 53% / 0.3);
+    --shadow-sm: 0 1px 2px 0 hsl(237 38% 30% / 0.05);
+    --shadow-md: 0 4px 6px -1px hsl(237 38% 30% / 0.1), 0 2px 4px -1px hsl(237 38% 30% / 0.06);
+    --shadow-lg: 0 10px 15px -3px hsl(237 38% 30% / 0.1), 0 4px 6px -2px hsl(237 38% 30% / 0.05);
+    --shadow-cta: 0 10px 30px -10px hsl(204 25% 67% / 0.3);
     
     /* Typography scale */
     --font-display: 'Inter', system-ui, sans-serif;

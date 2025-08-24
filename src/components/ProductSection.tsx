@@ -28,7 +28,7 @@ export const ProductSection = () => {
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
               <span className="bg-gradient-hero bg-clip-text text-transparent">
-                Micro-Habit Mastery System
+                HabitoX
               </span>
             </h2>
             <p className="text-xl lg:text-2xl text-muted-foreground font-medium mb-4">

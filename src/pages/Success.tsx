@@ -30,12 +30,12 @@ const Success = () => {
             <h1 className="text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
               Welcome to Your{" "}
               <span className="bg-gradient-success bg-clip-text text-transparent">
-                Micro-Habit Journey!
+                HabitoX!
               </span>
             </h1>
 
             <p className="text-xl text-muted-foreground mb-8 leading-relaxed">
-              Your purchase was successful! You now have access to the Micro-Habit Mastery System. 
+              Your purchase was successful! You now have access to the HabitoX. 
               Get ready to build habits that actually stick.
             </p>
 

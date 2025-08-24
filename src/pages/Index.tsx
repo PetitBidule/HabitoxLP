@@ -97,7 +97,7 @@ const Index = () => {
           <div className="max-w-4xl mx-auto text-center">
             <div className="grid md:grid-cols-2 gap-8 mb-8">
               <div>
-                <h3 className="text-lg font-semibold mb-4">Micro-Habit Mastery</h3>
+                <h3 className="text-lg font-semibold mb-4">HabitoX</h3>
                 <p className="text-background/80 text-sm leading-relaxed">
                   The revolutionary habit system that guarantees success by focusing on ONE habit at a time.
                 </p>
@@ -106,8 +106,8 @@ const Index = () => {
                 <h3 className="text-lg font-semibold mb-4">Support</h3>
                 <div className="space-y-2 text-sm">
                   <p>
-                    <a href="mailto:hello@microhabitmastery.com" className="text-background/80 hover:text-background transition-colors">
-                      hello@microhabitmastery.com
+                    <a href="mailto:habitoxts@gmail.com" className="text-background/80 hover:text-background transition-colors">
+                    habitoxts@gmail.com
                     </a>
                   </p>
                 </div>
@@ -117,7 +117,7 @@ const Index = () => {
             
             <div className="border-t border-background/20 pt-8">
               <p className="text-background/60 text-sm">
-                © 2024 Micro-Habit Mastery System. All rights reserved. | 
+                © 2024 HabitoX. All rights reserved. | 
                 <a href="#" className="hover:text-background ml-1">Privacy Policy</a> | 
                 <a href="#" className="hover:text-background ml-1">Terms of Service</a>
               </p>

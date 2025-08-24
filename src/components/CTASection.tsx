@@ -26,7 +26,7 @@ export const CTASection = ({ onPurchase }: CTASectionProps) => {
               className="text-xl px-10 py-6 h-auto shadow-2xl transform hover:scale-105 transition-all duration-200"
               onClick={onPurchase}
             >
-              Start My Micro-Habit Journey - $47
+              Start My HabitoX Journey - $47
             </Button>
             
            
