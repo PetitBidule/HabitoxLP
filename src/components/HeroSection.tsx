@@ -23,37 +23,9 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="space-y-8">
-            {/* Email Capture */}
-            <div className="bg-card/80 backdrop-blur-sm p-4 rounded-lg border border-border shadow-sm">
-              <p className="text-sm font-medium text-primary mb-2">Get Your Free Habit Selection Guide</p>
-              <div className="flex gap-2">
-                <input 
-                  type="email" 
-                  placeholder="Enter your email"
-                  className="flex-1 px-3 py-2 bg-background border border-input rounded-md text-sm"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      const email = (e.target as HTMLInputElement).value;
-                      if (email) onEmailCapture(email);
-                    }
-                  }}
-                />
-                <Button 
-                  variant="secondary" 
-                  size="sm"
-                  onClick={() => {
-                    const input = document.querySelector('input[type="email"]') as HTMLInputElement;
-                    if (input?.value) onEmailCapture(input.value);
-                  }}
-                >
-                  Get Guide
-                </Button>
-              </div>
-            </div>
-
             {/* Main Headline */}
             <div>
-              <h1 className="text-4xl lg:text-6xl font-bold font-display text-foreground leading-tight mb-6">
+              <h1 className="text-4xl lg:text-6xl font-bold font-display text-foreground leading-tight my-10">
                 Why Your Brain Refuses to Cooperate with{" "}
                 <span className="bg-gradient-hero bg-clip-text text-transparent">
                   Habit Tracking Apps

@@ -117,7 +117,7 @@ const Index = () => {
             
             <div className="border-t border-background/20 pt-8">
               <p className="text-background/60 text-sm">
-                © 2024 HabitoX. All rights reserved. | 
+                © 2025 HabitoX. All rights reserved. | 
                 <a href="#" className="hover:text-background ml-1">Privacy Policy</a> | 
                 <a href="#" className="hover:text-background ml-1">Terms of Service</a>
               </p>
