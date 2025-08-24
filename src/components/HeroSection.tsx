@@ -9,7 +9,7 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) => {
   return (
-    <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden">
+    <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden pt-28 lg:pt-32">
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <img 
@@ -18,8 +18,22 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
           className="w-full h-full object-cover opacity-10"
         />
       </div>
+
+      {/* Header - Logo + App Name */}
+      <header className="absolute top-0 left-20 w-full z-20">
+        <div className="container mx-auto px-8 py-8">
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-3">
+              {/* Logo image */}
+              <img src="/logo_habitox-removebg-preview.png" alt="HabitoX logo" className="w-40 h-40 rounded-md object-contain" />
+              {/* App name - change as needed */}
+              <span className="text-2xl font-bold text-foreground">HabitoX</span>
+            </div>
+          </div>
+        </div>
+      </header>
       
-      <div className="container mx-auto px-4 relative z-10">
+      <div className="container mx-auto px-8 py-8 relative z-10">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
           <div className="space-y-8">

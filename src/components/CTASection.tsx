@@ -1,12 +1,20 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Shield, Clock } from "lucide-react";
+import { Input } from "@/components/ui/input";
 
 interface CTASectionProps {
-  onPurchase: () => void;
+  onEmailCapture: (email: string) => void;
 }
 
-export const CTASection = ({ onPurchase }: CTASectionProps) => {
+export const CTASection = ({ onEmailCapture }: CTASectionProps) => {
+  const [emailAddress, setEmailAddress] = useState("");
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!emailAddress) return;
+    onEmailCapture(emailAddress);
+    setEmailAddress("");
+  };
   return (
     <section className="h-90 py-20 bg-gradient-hero">
       <div className="container mx-auto px-4">
@@ -17,20 +25,25 @@ export const CTASection = ({ onPurchase }: CTASectionProps) => {
             <span className="text-yellow-300">project</span>
           </h2>
 
-
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-16">
+          {/* Email Subscribe Form */}
+          <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-16 max-w-xl mx-auto">
+            <Input
+              type="email"
+              placeholder="Email"
+              value={emailAddress}
+              onChange={(e) => setEmailAddress(e.target.value)}
+              required
+              className="h-12 bg-white/90"
+            />
             <Button 
+              type="submit"
               variant="cta" 
               size="lg" 
-              className="text-xl px-10 py-6 h-auto shadow-2xl transform hover:scale-105 transition-all duration-200"
-              onClick={onPurchase}
+              className="text-xl px-6 py-4 h-auto shadow-2xl transform hover:scale-105 transition-all duration-200"
             >
-              Start My HabitoX Journey - $47
+              Subscribe
             </Button>
-            
-           
-          </div>
+          </form>
 
           
         </div>

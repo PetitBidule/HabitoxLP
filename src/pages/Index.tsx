@@ -15,7 +15,7 @@ const Index = () => {
     // Simulate email capture
     toast({
       title: "Success!",
-      description: "Your free Habit Selection Guide is on its way to your inbox.",
+      description: "Thank you for subscribing to HabitoX.",
     });
     console.log("Email captured:", email);
   };
@@ -85,7 +85,7 @@ const Index = () => {
 
       {/* Final CTA Section */}
       <div id="cta-section">
-        <CTASection onPurchase={handlePurchase} />
+        <CTASection onEmailCapture={handleEmailCapture} />
       </div>
 
       {/* Contact Form */}
