@@ -12,12 +12,29 @@ const Index = () => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
 
   const handleEmailCapture = async (email: string) => {
-    // Simulate email capture
-    toast({
-      title: "Success!",
-      description: "Thank you for subscribing to HabitoX.",
-    });
-    console.log("Email captured:", email);
+    try {
+      const { error } = await supabase.functions.invoke('send-subscription-email', {
+        body: { email },
+        // headers: {
+        //   Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
+        //   apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
+        // },
+      });
+
+      if (error) throw error;
+
+      toast({
+        title: "Success!",
+        description: "A welcome email has been sent to your inbox.",
+      });
+    } catch (error) {
+      console.error("Email send error:", error);
+      toast({
+        title: "Oops",
+        description: "We couldn't send the email. Please try again later.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handleGetStarted = () => {
@@ -27,43 +44,6 @@ const Index = () => {
     });
   };
 
-  const handlePurchase = async () => {
-    if (isProcessingPayment) return;
-    
-    setIsProcessingPayment(true);
-    
-    try {
-      const { data, error } = await supabase.functions.invoke('create-payment', {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-
-      if (error) {
-        console.error('Payment error:', error);
-        toast({
-          title: "Payment Error",
-          description: "There was an issue processing your payment. Please try again.",
-          variant: "destructive",
-        });
-        return;
-      }
-
-      if (data?.url) {
-        // Open Stripe checkout in a new tab
-        window.open(data.url, '_blank');
-      }
-    } catch (error) {
-      console.error('Payment error:', error);
-      toast({
-        title: "Payment Error",
-        description: "There was an issue processing your payment. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsProcessingPayment(false);
-    }
-  };
 
   return (
     <div className="min-h-screen bg-background">
