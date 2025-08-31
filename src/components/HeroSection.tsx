@@ -36,42 +36,42 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
       <div className="container mx-auto px-8 py-8 relative z-10">
         <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
           {/* Left Column - Content */}
-          <div className="space-y-8">
+          <div className="space-y-6 lg:space-y-8">
             {/* Main Headline */}
             <div>
-              <h1 className="text-4xl lg:text-6xl font-bold font-display text-foreground leading-tight my-10">
+              <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold font-display text-foreground leading-tight my-6 lg:my-10">
                 Why Your Brain Refuses to Cooperate with{" "}
                 <span className="bg-gradient-hero bg-clip-text text-transparent">
                   Habit Tracking Apps
                 </span>
               </h1>
               
-              <p className="text-xl lg:text-2xl text-muted-foreground font-medium leading-relaxed">
+              <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground font-medium leading-relaxed">
                 The ultra-simplified habit system designed for overwhelmed beginners who've tried everything else. 
                 Master one tiny habit at a time—<span className="font-bold text-foreground">guaranteed</span>.
               </p>
             </div>
 
             {/* Three Bullet Points */}
-            <div className="space-y-4">
+            <div className="space-y-3 lg:space-y-4">
               {[
                 "Eliminates overwhelm by restricting you to ONE habit at a time (literally prevents adding more)",
                 "Intensive micro-coaching ensures you actually stick with it this time",
                 "Scientific habit stacking only after you've mastered your first habit"
               ].map((point, index) => (
                 <div key={index} className="flex items-start gap-3">
-                  <CheckCircle className="w-6 h-6 text-success flex-shrink-0 mt-0.5" />
-                  <p className="text-lg font-medium text-foreground">{point}</p>
+                  <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-success flex-shrink-0 mt-0.5" />
+                  <p className="text-base lg:text-lg font-medium text-foreground">{point}</p>
                 </div>
               ))}
             </div>
 
             {/* Primary CTA */}
-            <div className="pt-4">
+            <div className="pt-2 lg:pt-4">
               <Button 
                 variant="cta" 
                 size="lg" 
-                className="text-xl px-8 py-4 h-auto"
+                className="text-base sm:text-lg lg:text-xl px-6 sm:px-8 py-3 lg:py-4 h-auto w-full sm:w-auto"
                 onClick={onGetStarted}
               >
                 Follow the development of the application
@@ -79,8 +79,8 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
             </div>
           </div>
 
-          {/* Right Column - Visual */}
-          <div className="lg:pl-8">
+          {/* Right Column - Visual - Hidden on mobile */}
+          <div className="hidden lg:block lg:pl-8">
             <div className="relative">
               <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl border border-border shadow-lg">
                 <div className="space-y-6">

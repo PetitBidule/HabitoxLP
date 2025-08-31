@@ -16,10 +16,6 @@ const Index = () => {
     try {
       const { error } = await supabase.functions.invoke('send-subscription-email', {
         body: { email },
-        // headers: {
-        //   Authorization: `Bearer ${import.meta.env.VITE_SUPABASE_ANON_KEY}`,
-        //   apikey: import.meta.env.VITE_SUPABASE_ANON_KEY,
-        // },
       });
 
       if (error) throw error;
