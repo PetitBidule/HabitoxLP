@@ -11,44 +11,45 @@ serve(async (req) => {
   }
 
   try {
-    const { email } = await req.json();
+    const { name, email, message } = await req.json();
 
-    if (!email || typeof email !== "string") {
+    if (!name || !email || !message) {
       return new Response(
-        JSON.stringify({ error: "Invalid email" }),
+        JSON.stringify({ error: "Missing fields" }),
         { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } },
       );
     }
 
     const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    console.log("RESEND_API_KEY", RESEND_API_KEY);
-    
+    // garder cette adresse pour le moment
+    const CONTACT_TO = "habitoxts@gmail.com";
+    const FROM = "HabitoX <no-reply@habitoxts.com>";
+
     if (!RESEND_API_KEY) {
-      console.log("missing RESEND_API_KEY");
       return new Response(
         JSON.stringify({ error: "Missing RESEND_API_KEY" }),
         { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } },
       );
     }
-    console.log("test");
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${RESEND_API_KEY}`,
+        Authorization: `Bearer ${RESEND_API_KEY}`,
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
         from: "HabitoX <no-reply@habitox.app>",
-        to: [email],
-        subject: "Bienvenue sur HabitoX",
+        to: ["habitoxts@gmail.com"],
+        reply_to: email,
+        subject: `New contact message from ${name}`,
         html: `
           <!DOCTYPE html>
           <html lang="fr">
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Bienvenue sur HabitoX</title>
+            <title>Nouveau message de contact - HabitoX</title>
           </head>
           <body style="margin: 0; padding: 0; background-color: #f8fafc; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;">
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="100%" style="background-color: #f8fafc;">
@@ -57,7 +58,7 @@ serve(async (req) => {
                   <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width: 600px; background-color: #ffffff; border-radius: 12px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); overflow: hidden;">
                     
                     <!-- Header avec logo -->
-                   <tr>
+                    <tr>
                       <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px 30px; text-align: center;">
                         <div style="margin-bottom: 20px;">
                           <div style="display: inline-block; width: 80px; height: 80px; border-radius: 25%; position: relative; overflow: hidden;">
@@ -73,30 +74,34 @@ serve(async (req) => {
                     <tr>
                       <td style="padding: 40px 30px;">
                         <div style="text-align: center; margin-bottom: 30px;">
-                          <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); border-radius: 50%; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-size: 30px;">
-                            🎉
+                          <h2 style="color: #1f2937; font-size: 24px; font-weight: 600; margin: 0 0 20px 0;">📧 Nouveau message reçu</h2>
+                          <p style="color: #6b7280; font-size: 16px; margin: 0; line-height: 1.6;">Vous avez reçu un nouveau message de contact via votre site web HabitoX.</p>
+                        </div>
+                        
+                        <div style="background-color: #f9fafb; border-radius: 8px; padding: 25px; margin-bottom: 30px; border-left: 4px solid #10b981;">
+                          <div style="margin-bottom: 20px;">
+                            <h3 style="color: #1f2937; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">👤 Informations du contact</h3>
+                            <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                              <span style="background-color: #10b981; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 12px; min-width: 60px; text-align: center;">Nom</span>
+                              <span style="color: #374151; font-weight: 500;">${name}</span>
+                            </div>
+                            <div style="display: flex; align-items: center; margin-bottom: 12px;">
+                              <span style="background-color: #3b82f6; color: white; padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 12px; min-width: 60px; text-align: center;">Email</span>
+                              <span style="color: #374151; font-weight: 500;">${email}</span>
+                            </div>
                           </div>
-                          <h2 style="color: #1f2937; font-size: 24px; font-weight: 600; margin: 0 0 20px 0;">Merci pour votre abonnement !</h2>
-                          <p style="color: #6b7280; font-size: 16px; margin: 0; line-height: 1.6;">Nous sommes ravis de vous accueillir dans la communauté HabitoX !</p>
+                          
+                          <div>
+                            <h3 style="color: #1f2937; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">💬 Message</h3>
+                            <div style="background-color: #ffffff; border: 1px solid #e5e7eb; border-radius: 6px; padding: 20px; color: #374151; line-height: 1.6; text-align: left;">
+                              ${message.replace(/\n/g, '<br/>')}
+                            </div>
+                          </div>
                         </div>
                         
-                        <div style="background-color: #f0fdf4; border-radius: 8px; padding: 25px; margin-bottom: 30px; border-left: 4px solid #10b981;">
-                          <h3 style="color: #166534; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">🚀 Ce qui vous attend :</h3>
-                          <ul style="color: #166534; font-size: 16px; line-height: 1.6; margin: 0; padding-left: 20px;">
-                            <li style="margin-bottom: 8px;">Des nouvelles exclusives sur l'avancement du projet</li>
-                            <li style="margin-bottom: 8px;">Des aperçus en avant-première des nouvelles fonctionnalités</li>
-                            <li style="margin-bottom: 8px;">Des accès anticipés aux versions bêta</li>
-                          </ul>
-                        </div>
-                        
-                        <div style="background-color: #eff6ff; border-radius: 8px; padding: 25px; margin-bottom: 30px; border-left: 4px solid #3b82f6;">
-                          <h3 style="color: #1e40af; font-size: 18px; font-weight: 600; margin: 0 0 15px 0;">💡 Prochaine étape :</h3>
-                          <p style="color: #1e40af; font-size: 16px; line-height: 1.6; margin: 0;">Restez connecté ! Nous vous enverrons bientôt votre premier email avec des informations exclusives sur HabitoX.</p>
-                        </div>
-                        
-                        <div style="text-align: center; padding: 20px; background-color: #fef3c7; border-radius: 8px; border: 1px solid #fde68a;">
-                          <p style="color: #92400e; font-size: 14px; margin: 0; font-weight: 500;">
-                            💬 <strong>Besoin d'aide ?</strong> N'hésitez pas à nous contacter si vous avez des questions !
+                        <div style="text-align: center; padding: 20px; background-color: #f0fdf4; border-radius: 8px; border: 1px solid #bbf7d0;">
+                          <p style="color: #166534; font-size: 14px; margin: 0; font-weight: 500;">
+                            💡 <strong>Conseil :</strong> Répondez rapidement à ce message pour maintenir une excellente relation client !
                           </p>
                         </div>
                       </td>
@@ -127,7 +132,6 @@ serve(async (req) => {
 
     if (!response.ok) {
       const errText = await response.text();
-      console.log("errText", errText);
       return new Response(
         JSON.stringify({ error: "Failed to send email", details: errText }),
         { status: 502, headers: { "Content-Type": "application/json", ...corsHeaders } },
@@ -139,9 +143,8 @@ serve(async (req) => {
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } },
     );
   } catch (error) {
-    console.log("error", error);
     return new Response(
-      JSON.stringify({ error: "Unexpected error test", details: String(error) }),
+      JSON.stringify({ error: "Unexpected error", details: String(error) }),
       { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } },
     );
   }

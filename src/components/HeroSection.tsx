@@ -25,7 +25,7 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               {/* Logo image */}
-              <img src="/logo_habitox-removebg-preview.png" alt="HabitoX logo" className="w-10 h-10 rounded-md object-contain" />
+              <img src="/logo_habitox_hero_section.png" alt="HabitoX logo" className="w-12 h-12 rounded-md object-contain" />
               {/* App name - change as needed */}
               <span className="text-2xl font-bold text-foreground">HabitoX</span>
             </div>

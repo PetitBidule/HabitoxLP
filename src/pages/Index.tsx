@@ -7,6 +7,7 @@ import { CTASection } from "@/components/CTASection";
 import { ContactForm } from "@/components/ContactForm";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
+import { Link } from "react-router-dom";
 
 const Index = () => {
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
@@ -98,8 +99,8 @@ const Index = () => {
             <div className="border-t border-background/20 pt-8">
               <p className="text-background/60 text-sm">
                 © 2025 HabitoX. All rights reserved. | 
-                <a href="#" className="hover:text-background ml-1">Privacy Policy</a> | 
-                <a href="#" className="hover:text-background ml-1">Terms of Service</a>
+                <Link to="/privacy" className="hover:text-background ml-1">Privacy Policy</Link> | 
+                <Link to="/terms" className="hover:text-background ml-1">Terms of Service</Link>
               </p>
             </div>
           </div>
