@@ -4,7 +4,6 @@ import { HeroSection } from "@/components/HeroSection";
 import { PainSection } from "@/components/PainSection";
 import { OutcomeSection } from "@/components/OutcomeSection";
 import { ProductSection } from "@/components/ProductSection";
-import { CTASection } from "@/components/CTASection";
 import { ContactForm } from "@/components/ContactForm";
 import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { AnimatedSection } from "@/components/ui/animated-section";
@@ -37,12 +36,7 @@ const Index = () => {
     }
   };
 
-  const handleGetStarted = () => {
-    // Smooth scroll to CTA section
-    document.getElementById('cta-section')?.scrollIntoView({ 
-      behavior: 'smooth' 
-    });
-  };
+
 
 
   return (
@@ -52,7 +46,6 @@ const Index = () => {
       
       {/* Hero Section */}
       <HeroSection 
-        onGetStarted={handleGetStarted}
         onEmailCapture={handleEmailCapture}
       />
 
@@ -71,10 +64,7 @@ const Index = () => {
         <ProductSection />
       </AnimatedSection>
 
-      {/* Final CTA Section */}
-        <div id="cta-section">
-          <CTASection onEmailCapture={handleEmailCapture} />
-        </div>
+
 
       {/* Contact Form */}
       <AnimatedSection delay={0.2} direction="up">

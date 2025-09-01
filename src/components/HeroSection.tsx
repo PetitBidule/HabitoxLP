@@ -1,15 +1,26 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { AnimatedSection, AnimatedText, AnimatedCard } from "@/components/ui/animated-section";
+import { WaitlistModal } from "@/components/ui/waitlist-modal";
 import heroImage from "@/assets/hero-image.jpg";
 
 interface HeroSectionProps {
-  onGetStarted: () => void;
   onEmailCapture: (email: string) => void;
 }
 
-export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) => {
+export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const handleGetStarted = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+  };
+
   return (
     <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden pt-28 lg:pt-32">
       {/* Background Image */}
@@ -115,16 +126,20 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
             </AnimatedSection>
 
             {/* Primary CTA */}
-            <div className="pt-2 lg:pt-4">
-                <Button 
-                  variant="cta" 
-                  size="lg" 
-                  className="text-base sm:text-lg lg:text-xl px-6 sm:px-8 py-3 lg:py-4 h-auto w-full sm:w-auto"
-                  onClick={onGetStarted}
-                >
-                  Join waitlist
-                </Button>
-            </div>
+                         <AnimatedSection delay={1.2} direction="up">
+               <div className="pt-2 lg:pt-4">
+                 <div>
+                   <Button 
+                     variant="cta" 
+                     size="lg" 
+                     className="text-base sm:text-lg lg:text-xl px-6 sm:px-8 py-3 lg:py-4 h-auto w-full sm:w-auto"
+                     onClick={handleGetStarted}
+                   >
+                     Join waitlist
+                   </Button>
+                 </div>
+               </div>
+             </AnimatedSection>
           </div>
 
           {/* Right Column - Visual - Hidden on mobile */}
@@ -166,6 +181,13 @@ export const HeroSection = ({ onGetStarted, onEmailCapture }: HeroSectionProps) 
           </div>
         </div>
       </div>
+
+      {/* Waitlist Modal */}
+      <WaitlistModal 
+        isOpen={isModalOpen}
+        onClose={handleCloseModal}
+        onEmailCapture={onEmailCapture}
+      />
     </section>
   );
 };
