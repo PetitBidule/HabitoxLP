@@ -41,7 +41,7 @@ export const CTASection = ({ onEmailCapture }: CTASectionProps) => {
               size="lg" 
               className="text-xl px-6 py-4 h-auto shadow-2xl transform hover:scale-105 transition-all duration-200"
             >
-              Subscribe
+              Get News
             </Button>
           </form>
 

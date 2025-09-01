@@ -1,10 +1,13 @@
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { HeroSection } from "@/components/HeroSection";
 import { PainSection } from "@/components/PainSection";
 import { OutcomeSection } from "@/components/OutcomeSection";
 import { ProductSection } from "@/components/ProductSection";
 import { CTASection } from "@/components/CTASection";
 import { ContactForm } from "@/components/ContactForm";
+import { ScrollProgress } from "@/components/ui/scroll-progress";
+import { AnimatedSection } from "@/components/ui/animated-section";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -44,6 +47,9 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Scroll Progress Bar */}
+      <ScrollProgress />
+      
       {/* Hero Section */}
       <HeroSection 
         onGetStarted={handleGetStarted}
@@ -51,25 +57,34 @@ const Index = () => {
       />
 
       {/* Pain Points Section */}
-      <PainSection />
+      <AnimatedSection delay={0.1} direction="up">
+        <PainSection />
+      </AnimatedSection>
 
       {/* Desired Outcomes Section */}
-      <OutcomeSection />
-
+      <AnimatedSection delay={0.2} direction="up">
+        <OutcomeSection />
+      </AnimatedSection>
 
       {/* Product Introduction Section */}
-      <ProductSection />
+      <AnimatedSection delay={0.2} direction="up">
+        <ProductSection />
+      </AnimatedSection>
 
       {/* Final CTA Section */}
-      <div id="cta-section">
-        <CTASection onEmailCapture={handleEmailCapture} />
-      </div>
+        <div id="cta-section">
+          <CTASection onEmailCapture={handleEmailCapture} />
+        </div>
 
       {/* Contact Form */}
-      <ContactForm />
+      <AnimatedSection delay={0.2} direction="up">
+        <ContactForm />
+      </AnimatedSection>
 
       {/* Footer */}
-      <footer className="bg-foreground text-background py-12">
+      <footer 
+        className="bg-foreground text-background py-12"
+      >
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <div className="grid md:grid-cols-2 gap-8 mb-8">
@@ -89,9 +104,7 @@ const Index = () => {
                   </p>
                 </div>
               </div>
-             
             </div>
-            
             <div className="border-t border-background/20 pt-8">
               <p className="text-background/60 text-sm">
                 © 2025 HabitoX. All rights reserved. | 
