@@ -1,6 +1,10 @@
 import { Card, CardContent } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
 
 export const PainSection = () => {
+  const [currentIndex, setCurrentIndex] = useState(0);
+  
   const painPoints = [
     {
       quote: "I swear, I want to be that person who works out regularly, drinks enough water, and actually sleeps at a decent hour—but my brain just refuses to cooperate.",
@@ -16,6 +20,30 @@ export const PainSection = () => {
     }
   ];
 
+  // Timer automatique pour faire défiler les cartes
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % painPoints.length);
+    }, 5000); // Change toutes les 5 secondes
+
+    return () => clearInterval(timer);
+  }, [painPoints.length]);
+
+  // Fonctions de navigation
+  const goToNext = () => {
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % painPoints.length);
+  };
+
+  const goToPrevious = () => {
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? painPoints.length - 1 : prevIndex - 1
+    );
+  };
+
+  const goToSlide = (index: number) => {
+    setCurrentIndex(index);
+  };
+
   return (
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
@@ -30,20 +58,54 @@ export const PainSection = () => {
             </h2>
           </div>
 
-          {/* Pain Points */}
-          <div className="space-y-8 mb-16">
-            {painPoints.map((pain, index) => (
-              <Card key={index} className="bg-card border-border shadow-md">
+          {/* Carrousel des Pain Points */}
+          <div className="relative mb-16">
+            {/* Carrousel Container */}
+            <div className="relative overflow-hidden">
+              <Card className="bg-card border-border shadow-md min-h-[300px]">
                 <CardContent className="p-8">
                   <blockquote className="text-xl lg:text-2xl font-medium text-primary italic mb-6 leading-relaxed">
-                    "{pain.quote}"
+                    "{painPoints[currentIndex].quote}"
                   </blockquote>
                   <p className="text-lg text-muted-foreground leading-relaxed">
-                    {pain.description}
+                    {painPoints[currentIndex].description}
                   </p>
                 </CardContent>
               </Card>
-            ))}
+            </div>
+
+            {/* Boutons de navigation */}
+            <button
+              onClick={goToPrevious}
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-2 transition-all duration-200 z-10"
+              aria-label="Carte précédente"
+            >
+              <ChevronLeft className="w-6 h-6 text-gray-700" />
+            </button>
+            
+            <button
+              onClick={goToNext}
+              className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white/80 hover:bg-white shadow-lg rounded-full p-2 transition-all duration-200 z-10"
+              aria-label="Carte suivante"
+            >
+              <ChevronRight className="w-6 h-6 text-gray-700" />
+            </button>
+
+            {/* Indicateurs (dots) */}
+            <div className="flex justify-center space-x-2 mt-6">
+              {painPoints.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  className={`w-3 h-3 rounded-full transition-all duration-200 ${
+                    index === currentIndex
+                      ? 'bg-primary scale-125'
+                      : 'bg-gray-300 hover:bg-gray-400'
+                  }`}
+                  aria-label={`Aller à la carte ${index + 1}`}
+                />
+              ))}
+            </div>
           </div>
 
           {/* Belief Deconstruction */}
