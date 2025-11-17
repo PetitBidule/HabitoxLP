@@ -1,10 +1,24 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { CheckCircle } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
-import { AnimatedSection, AnimatedText, AnimatedCard } from "@/components/ui/animated-section";
+import { AnimatedSection, AnimatedText } from "@/components/ui/animated-section";
 import { WaitlistModal } from "@/components/ui/waitlist-modal";
-import heroImage from "@/assets/hero-image.jpg";
+import { Menu } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
+import { supabase } from "@/lib/supabase";
+import { toast } from "@/hooks/use-toast";
 
 interface HeroSectionProps {
   onEmailCapture: (email: string) => void;
@@ -12,6 +26,70 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPlayStoreDialogOpen, setIsPlayStoreDialogOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [betaEmail, setBetaEmail] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [showThankYouDialog, setShowThankYouDialog] = useState(false);
+
+  const APP_STORE_URL = "https://apps.apple.com/fr/app/habitox/id6752669720";
+  
+  const ANDROID_BETA_URL = "https://play.google.com/apps/testing/com.habitox";
+
+  const handleAppStoreClick = () => {
+    window.open(APP_STORE_URL, "_blank");
+  };
+
+  const handlePlayStoreClick = () => {
+    setIsPlayStoreDialogOpen(true);
+  };
+
+  const handlePlayStoreDialogClose = () => {
+    setIsPlayStoreDialogOpen(false);
+    setBetaEmail("");
+  };
+
+  const handleJoinBeta = async () => {
+    if (!betaEmail || !betaEmail.includes("@")) {
+      toast({
+        title: "Invalid email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+    
+    try {
+      const { error } = await supabase.functions.invoke('send-beta-email', {
+        body: { email: betaEmail },
+      });
+
+      if (error) throw error;
+
+      setIsPlayStoreDialogOpen(false);
+      setShowThankYouDialog(true);
+      setBetaEmail("");
+    } catch (error) {
+      console.error("Beta email send error:", error);
+      toast({
+        title: "Error",
+        description: "We couldn't process your request. Please try again later.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+    setIsMobileMenuOpen(false);
+  };
 
   const handleGetStarted = () => {
     setIsModalOpen(true);
@@ -21,43 +99,35 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
     setIsModalOpen(false);
   };
 
-  return (
-    <section className="relative min-h-screen flex items-center bg-gradient-subtle overflow-hidden pt-28 lg:pt-32">
-      {/* Background Image */}
-      <motion.div 
-        className="absolute inset-0 z-0"
-        initial={{ opacity: 0, scale: 1.1 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ duration: 1.5, ease: "easeOut" }}
-      >
-        <img 
-          src={heroImage} 
-          alt="Person focused on building habits" 
-          className="w-full h-full object-cover opacity-10"
-        />
-      </motion.div>
+  const mockups = [
+    { src: "/Apple iPhone 16 Pro Max Screenshot 1.png" }, 
+    { src: "/Apple iPhone 16 Pro Max Screenshot 2.png" }, 
+    { src: "/Apple iPhone 16 Pro Max Screenshot 3.png" }, 
+    { src: "/Apple iPhone 16 Pro Max Screenshot 4.png" }, 
+    { src: "/Apple iPhone 16 Pro Max Screenshot 5.png" }, 
+  ];
 
-      {/* Header - Logo + App Name */}
+  return (
+    <section id="hero" className="relative min-h-screen flex flex-col bg-white overflow-hidden">
+
       <motion.header 
-        className="absolute top-0 left-20 w-full z-20"
+        className="w-full z-20 bg-background/80 backdrop-blur-md border-b border-border/50"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <div className="container mx-auto px-8 py-8">
+        <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              {/* Logo image */}
               <motion.img 
-                src="/logo_habitox_hero_section.png" 
+                src="/logo_launcher_habitox_android.png" 
                 alt="HabitoX logo" 
-                className="w-12 h-12 rounded-md object-contain"
+                className="w-10 h-10 rounded-md object-contain"
                 whileHover={{ scale: 1.1, rotate: 5 }}
                 transition={{ duration: 0.2 }}
               />
-              {/* App name - change as needed */}
               <motion.span 
-                className="text-2xl font-bold text-foreground"
+                className="text-xl font-bold text-foreground"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.6, delay: 0.4 }}
@@ -65,124 +135,243 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
                 HabitoX
               </motion.span>
             </div>
+
+            {/* Desktop Navigation */}
+            <nav className="hidden md:flex items-center space-x-8">
+              <motion.button
+                onClick={() => scrollToSection('hero')}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Overview
+              </motion.button>
+              <motion.button
+                onClick={() => scrollToSection('product')}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Features
+              </motion.button>
+              <motion.button
+                onClick={() => scrollToSection('pain')}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Why it works
+              </motion.button>
+              <motion.button
+                onClick={() => scrollToSection('contact')}
+                className="text-sm text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Contact
+              </motion.button>
+              <motion.button
+                className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded-md transition-colors duration-200 font-medium"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={handleAppStoreClick}
+              >
+                Download
+              </motion.button>
+            </nav>
+
+            {/* Mobile Menu */}
+            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
+              <SheetTrigger asChild className="md:hidden">
+                <Button variant="ghost" size="icon">
+                  <Menu className="h-6 w-6" />
+                </Button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[300px] sm:w-[400px]">
+                <nav className="flex flex-col gap-6 mt-8">
+                  <button
+                    onClick={() => scrollToSection('hero')}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium text-left"
+                  >
+                    Overview
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('product')}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium text-left"
+                  >
+                    Features
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('pain')}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium text-left"
+                  >
+                    Why it works
+                  </button>
+                  <button
+                    onClick={() => scrollToSection('contact')}
+                    className="text-lg text-muted-foreground hover:text-foreground transition-colors duration-200 font-medium text-left"
+                  >
+                    Contact
+                  </button>
+                  <Button
+                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium"
+                    onClick={handleAppStoreClick}
+                  >
+                    Download
+                  </Button>
+                </nav>
+              </SheetContent>
+            </Sheet>
           </div>
         </div>
       </motion.header>
       
-      <div className="container mx-auto px-8 pb-8 relative z-10">
-        <div className="max-w-6xl mx-auto grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Content */}
-          <div className="space-y-6 lg:space-y-8">
-            {/* Main Headline */}
-            <AnimatedSection delay={0.3} direction="up">
-              <div>
-                <AnimatedText delay={0.4} className="block">
-                  <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-display text-foreground leading-tight my-6 lg:my-10">
-                    Why Your Brain Refuses to Cooperate with{" "}
-                    <span className="bg-gradient-hero bg-clip-text text-transparent">
-                      Habit Tracking Apps
-                    </span>
-                  </h1>
-                </AnimatedText>
-                
-                <AnimatedText delay={0.6} className="block">
-                  <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground font-medium leading-relaxed">
-                    The ultra-simplified habit system designed for overwhelmed beginners who've tried everything else. 
-                    Master one tiny habit at a time—<span className="font-bold text-foreground">guaranteed</span>.
-                  </p>
-                </AnimatedText>
-              </div>
-            </AnimatedSection>
+      <div className="flex-1 flex flex-col items-center justify-center px-6 py-20">
+        <div className="text-center mb-16 max-w-4xl">
+          <AnimatedSection delay={0.3} direction="up">
+            <AnimatedText delay={0.4} className="block">
+              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
+                <span className="text-white
+ bg-green-400 px-2 py-1 rounded-sm">Simplify</span> your habits
+              </h1>
+            </AnimatedText>
+          </AnimatedSection>
 
-            {/* Three Bullet Points */}
-            <AnimatedSection delay={0.8} direction="up">
-              <div className="space-y-3 lg:space-y-4">
-                {[
-                  "Eliminates overwhelm by restricting you to ONE habit at a time (literally prevents adding more)",
-                  "Scientific habit stacking only after you've mastered your first habit"
-                ].map((point, index) => (
-                  <motion.div 
-                    key={index} 
-                    className="flex items-start gap-3"
-                    initial={{ opacity: 0, x: -30 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ 
-                      duration: 0.5, 
-                      delay: 0.9 + (index * 0.1),
-                      ease: "easeOut"
-                    }}
-                  >
-                    <motion.div
-                      whileHover={{ scale: 1.2, rotate: 360 }}
-                      transition={{ duration: 0.3 }}
-                    >
-                      <CheckCircle className="w-5 h-5 lg:w-6 lg:h-6 text-success flex-shrink-0 mt-0.5" />
-                    </motion.div>
-                    <p className="text-base lg:text-lg font-medium text-foreground">{point}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </AnimatedSection>
-
-            {/* Primary CTA */}
-                         <AnimatedSection delay={1.2} direction="up">
-               <div className="pt-2 lg:pt-4">
-                 <div>
-                   <Button 
-                     variant="cta" 
-                     size="lg" 
-                     className="text-base sm:text-lg lg:text-xl px-6 sm:px-8 py-3 lg:py-4 h-auto w-full sm:w-auto"
-                     onClick={handleGetStarted}
-                   >
-                     Join waitlist
-                   </Button>
-                 </div>
-               </div>
-             </AnimatedSection>
-          </div>
-
-          {/* Right Column - Visual - Hidden on mobile */}
-          <div className="hidden lg:block lg:pl-8">
-            <AnimatedCard delay={0.5} direction="right">
-              <div className="relative">
-                <div className="bg-card/80 backdrop-blur-sm p-8 rounded-2xl border border-border shadow-lg">
-                  <div className="space-y-6">
-                    <div 
-                      className="text-center"
-                    >
-                      <div 
-                        className="w-16 h-16 bg-gradient-primary rounded-full flex items-center justify-center mx-auto mb-4"
-                      >
-                        <span className="text-2xl font-bold text-primary-foreground">1</span>
-                      </div>
-                      <h3 className="text-lg font-semibold text-foreground">One Habit Focus</h3>
-                      <p className="text-muted-foreground">No overwhelm, just results</p>
-                    </div>
-                    
-                    <div className="border-t border-border pt-4">
-                      <div className="flex items-center justify-between text-sm">
-                        <span className="text-muted-foreground">Current Habit:</span>
-                        <span className="font-medium text-success">Drink 1 glass of water</span>
-                      </div>
-                      <div className="flex items-center justify-between text-sm mt-2">
-                        <span className="text-muted-foreground">Progress:</span>
-                        <span className="font-medium text-primary">Day 12 of 30</span>
-                      </div>
-                      <div 
-                        className="w-full bg-muted rounded-full h-2 mt-3">
-                        <div className="bg-gradient-success h-2 rounded-full w-2/5"></div>
-                      </div>
-                    </div>
+          <AnimatedSection delay={0.6} direction="up">
+            <div className="flex justify-center gap-4 flex-wrap">
+              <button 
+                className="transition-transform hover:scale-105 active:scale-95"
+                onClick={handleAppStoreClick}
+                aria-label="Télécharger sur l'App Store"
+              >
+                <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors">
+                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
+                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+                  </svg>
+                  <div className="flex flex-col items-start text-white">
+                    <span className="text-[10px] font-normal leading-tight">Download on the</span>
+                    <span className="text-xl font-semibold leading-tight tracking-tight">App Store</span>
                   </div>
                 </div>
-              </div>
-            </AnimatedCard>
-          </div>
+              </button>
+
+              <button 
+                className="transition-transform hover:scale-105 active:scale-95"
+                onClick={handlePlayStoreClick}
+                aria-label="Bientôt disponible sur Google Play"
+              >
+                <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors relative">
+                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
+                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                  </svg>
+                  <div className="flex flex-col items-start text-white">
+                    <span className="text-[10px] font-normal leading-tight">GET IT ON</span>
+                    <span className="text-xl font-semibold leading-tight tracking-tight">Google Play</span>
+                  </div>
+                  <div className="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-lg">
+                    SOON
+                  </div>
+                </div>
+              </button>
+            </div>
+          </AnimatedSection>
+        </div>
+
+        <div className="w-full overflow-hidden">
+          <motion.div 
+            className="flex gap-6 justify-center items-end px-6"
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.2, delay: 0.2 }}
+          >
+            {mockups.map((mockup, index) => (
+              <motion.div
+                key={index}
+                className="relative flex-shrink-0"
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.2, 
+                  delay: 0.2,
+                  ease: "easeOut"
+                }}
+                whileHover={{ scale: 1.05, y: -10, transition: { duration: 0.2 } }}
+              >
+                <div 
+                  style={{ 
+                    width: '280px',
+                    height: '580px',
+                    padding: '8px'
+                  }}
+                >
+                  <div className="w-full h-full rounded-[2.7rem] overflow-hidden bg-white">
+                    <img 
+                      src={mockup.src}
+                      alt={`HabitoX Screenshot ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
         </div>
       </div>
 
-      {/* Waitlist Modal */}
+      {/* Play Store Beta Dialog */}
+      <Dialog open={isPlayStoreDialogOpen} onOpenChange={setIsPlayStoreDialogOpen}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold">
+              Coming soon to Android 
+            </DialogTitle>
+            <DialogDescription className="text-base pt-4">
+              HabitoX will soon be available on Google Play. If you would like to test the application in advance, please join the closed beta test. It would be greatly appreciated.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 pt-4">
+            <Input
+              type="email"
+              placeholder="Enter your email"
+              value={betaEmail}
+              onChange={(e) => setBetaEmail(e.target.value)}
+              className="w-full"
+            />
+            <Button
+              onClick={handleJoinBeta}
+              disabled={isSubmitting}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-6 text-base"
+            >
+              {isSubmitting ? "Sending..." : "Join Beta Test"}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Thank You Dialog */}
+      <Dialog open={showThankYouDialog} onOpenChange={setShowThankYouDialog}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-2xl font-bold text-center">
+              🎉 Thank You!
+            </DialogTitle>
+            <DialogDescription className="text-base pt-4 text-center">
+              We've received your request to join the beta test. You'll receive an invitation via email within 24-48 hours. 
+              <br /><br />
+              We're excited to have you as part of our beta testing community!
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex flex-col gap-4 pt-4">
+            <Button
+              onClick={() => setShowThankYouDialog(false)}
+              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-6 text-base"
+            >
+              Got it!
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <WaitlistModal 
         isOpen={isModalOpen}
         onClose={handleCloseModal}

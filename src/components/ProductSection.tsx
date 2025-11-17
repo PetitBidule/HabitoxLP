@@ -1,7 +1,48 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Lock, MessageCircle, Layers } from "lucide-react";
+import { Lock, MessageCircle, Layers, CheckCircle2, Palette, Calendar, BarChart3, Home, Trophy } from "lucide-react";
+
+const mockupImages = [
+  "/Apple iPhone 16 Pro Max Screenshot 1.png",
+  "/Apple iPhone 16 Pro Max Screenshot 2.png",
+  "/Apple iPhone 16 Pro Max Screenshot 3.png",
+  "/Apple iPhone 16 Pro Max Screenshot 4.png",  
+  "/Apple iPhone 16 Pro Max Screenshot 5.png",
+];
 
 export const ProductSection = () => {
+  const features = [
+    {
+      icon: CheckCircle2,
+      title: "Track Your Habits",
+      description: "Easily track your daily habits with simple and intuitive calendars."
+    },
+    {
+      icon: Palette,
+      title: "Customization",
+      description: "Customise your habits and experience with themes, icons, colours, and settings tailored to your preferences."
+    },
+    {
+      icon: Calendar,
+      title: "Calendar",
+      description: "Visualise your progress through an interactive calendar and discover your streaks of success."
+    },
+    {
+      icon: BarChart3,
+      title: "Charts",
+      description: "Analyse your performance with comprehensive graphs and statistics."
+    },
+    {
+      icon: Home,
+      title: "Home Screen Widget",
+      description: "Keep an eye on your habits directly from your home screen with our customisable widgets."
+    },
+    {
+      icon: Trophy,
+      title: "Gamification",
+      description: "Unlock achievements and complete challenges to make tracking your habits even more motivating."
+    }
+  ];
+
   const steps = [
     {
       icon: Lock,
@@ -21,23 +62,55 @@ export const ProductSection = () => {
   ];
 
   return (
-    <section className="py-20 bg-background">
+    <section id="product" className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="max-w-6xl mx-auto">
           {/* Product Introduction */}
           <div className="text-center mb-16">
             <h2 className="text-4xl lg:text-5xl font-bold font-display text-foreground mb-6">
-              <span className="bg-gradient-hero bg-clip-text text-transparent">
-                HabitoX
-              </span>
+              HabitoX
             </h2>
             <p className="text-xl lg:text-2xl text-muted-foreground font-medium mb-4">
               The Only Habit Platform That Guarantees Success by Doing Less
             </p>
-            <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-              The revolutionary approach that forces you to master ONE habit completely before allowing you to add another. 
-              No complex features. No overwhelming dashboards. Just laser focus on what actually works.
-            </p>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+            The revolutionary approach that forces you to master ONE habit completely before allowing you to add another. 
+            No complex features. No overwhelming dashboards. Just laser focus on what actually works.
+          </p>
+        </div>
+
+          {/* Features Section */}
+          <div className="mb-20 cursor-pointer">
+            <h3 className="text-3xl font-bold text-center text-foreground mb-4 leading-relaxed">
+              Big on Features.
+              <br />
+              Deceptively Simple.
+            </h3>
+            
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {features.map((feature, index) => {
+                const IconComponent = feature.icon;
+                return (
+                  <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow">
+                    <CardContent className="p-6">
+                      <div className="flex items-start gap-4">
+                        <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
+                          <IconComponent className="w-6 h-6 text-primary-foreground" />
+                        </div>
+                        <div>
+                          <h4 className="text-lg font-bold text-foreground mb-2">
+                            {feature.title}
+                          </h4>
+                          <p className="text-sm text-muted-foreground leading-relaxed">
+                            {feature.description}
+                          </p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                );
+              })}
+            </div>
           </div>
 
           {/* How It Works */}

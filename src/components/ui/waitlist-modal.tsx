@@ -72,7 +72,7 @@ export const WaitlistModal = ({ isOpen, onClose, onEmailCapture }: WaitlistModal
               <div className="flex justify-center mb-6">
                 <div className="w-16 h-16 rounded-full overflow-hidden bg-gradient-to-br from-emerald-400 via-blue-400 to-purple-400 flex items-center justify-center">
                   <img 
-                    src="/logo_habitox-removebg-preview.png" 
+                    src="/logo_launcher_habitox_android.png" 
                     alt="HabitoX logo" 
                     className="w-12 h-12 object-contain"
                   />
