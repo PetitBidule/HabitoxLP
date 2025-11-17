@@ -62,7 +62,7 @@ serve(async (req) => {
                       <td style="background: linear-gradient(135deg, #10b981 0%, #059669 100%); padding: 40px 30px; text-align: center;">
                         <div style="margin-bottom: 20px;">
                           <div style="display: inline-block; width: 80px; height: 80px; border-radius: 25%; position: relative; overflow: hidden;">
-                            <img src="https://habitox.app/logo_habitox-removebg-preview.png" alt="HabitoX logo" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="https://habitox.app/logo_launcher_habitox_android.png" alt="HabitoX logo" style="width: 100%; height: 100%; object-fit: cover;">
                           </div>
                         </div>
                         <h1 style="color: #ffffff; font-size: 28px; font-weight: 600; margin: 0; text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">HabitoX</h1>
@@ -113,7 +113,7 @@ serve(async (req) => {
                         <p style="color: #6b7280; font-size: 14px; margin: 0 0 15px 0;">Envoyé automatiquement depuis votre site web HabitoX</p>
                         <div style="margin-bottom: 20px;">
                           <span style="display: inline-block; width: 60px; height: 60px; border-radius: 50%; position: relative; overflow: hidden;">
-                            <img src="https://habitox.app/logo_habitox-removebg-preview.png" alt="HabitoX logo" style="width: 100%; height: 100%; object-fit: cover;">
+                            <img src="https://habitox.app/logo_launcher_habitox_android.png" alt="HabitoX logo" style="width: 100%; height: 100%; object-fit: cover;">
                           </span>
                         </div>
                         <p style="color: #9ca3af; font-size: 12px; margin: 0;">© 2025 HabitoX. Tous droits réservés.</p>
