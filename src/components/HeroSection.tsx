@@ -1,24 +1,14 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { motion } from "framer-motion";
 import { AnimatedSection, AnimatedText } from "@/components/ui/animated-section";
 import { WaitlistModal } from "@/components/ui/waitlist-modal";
 import { Menu } from "lucide-react";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import {
   Sheet,
   SheetContent,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { supabase } from "@/lib/supabase";
-import { toast } from "@/hooks/use-toast";
 
 interface HeroSectionProps {
   onEmailCapture: (email: string) => void;
@@ -26,61 +16,18 @@ interface HeroSectionProps {
 
 export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isPlayStoreDialogOpen, setIsPlayStoreDialogOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [betaEmail, setBetaEmail] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showThankYouDialog, setShowThankYouDialog] = useState(false);
 
   const APP_STORE_URL = "https://apps.apple.com/fr/app/habitox/id6752669720";
-  
-  const ANDROID_BETA_URL = "https://play.google.com/apps/testing/com.habitox";
+
+  const PLAY_STORE_URL = "https://play.google.com/store/apps/details?id=com.habitox.android&hl=fr";
 
   const handleAppStoreClick = () => {
     window.open(APP_STORE_URL, "_blank");
   };
 
   const handlePlayStoreClick = () => {
-    setIsPlayStoreDialogOpen(true);
-  };
-
-  const handlePlayStoreDialogClose = () => {
-    setIsPlayStoreDialogOpen(false);
-    setBetaEmail("");
-  };
-
-  const handleJoinBeta = async () => {
-    if (!betaEmail || !betaEmail.includes("@")) {
-      toast({
-        title: "Invalid email",
-        description: "Please enter a valid email address.",
-        variant: "destructive",
-      });
-      return;
-    }
-
-    setIsSubmitting(true);
-    
-    try {
-      const { error } = await supabase.functions.invoke('send-beta-email', {
-        body: { email: betaEmail },
-      });
-
-      if (error) throw error;
-
-      setIsPlayStoreDialogOpen(false);
-      setShowThankYouDialog(true);
-      setBetaEmail("");
-    } catch (error) {
-      console.error("Beta email send error:", error);
-      toast({
-        title: "Error",
-        description: "We couldn't process your request. Please try again later.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsSubmitting(false);
-    }
+    window.open(PLAY_STORE_URL, "_blank");
   };
 
   const scrollToSection = (sectionId: string) => {
@@ -258,7 +205,7 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
               <button 
                 className="transition-transform hover:scale-105 active:scale-95"
                 onClick={handlePlayStoreClick}
-                aria-label="Bientôt disponible sur Google Play"
+                aria-label="Télécharger sur Google Play"
               >
                 <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors relative">
                   <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
@@ -267,9 +214,6 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
                   <div className="flex flex-col items-start text-white">
                     <span className="text-[10px] font-normal leading-tight">GET IT ON</span>
                     <span className="text-xl font-semibold leading-tight tracking-tight">Google Play</span>
-                  </div>
-                  <div className="absolute -top-2 -right-2 bg-green-500 text-white text-[9px] font-bold px-2 py-1 rounded-full shadow-lg">
-                    SOON
                   </div>
                 </div>
               </button>
@@ -318,61 +262,7 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
         </div>
       </div>
 
-      {/* Play Store Beta Dialog */}
-      <Dialog open={isPlayStoreDialogOpen} onOpenChange={setIsPlayStoreDialogOpen}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold">
-              Coming soon to Android 
-            </DialogTitle>
-            <DialogDescription className="text-base pt-4">
-              HabitoX will soon be available on Google Play. If you would like to test the application in advance, please join the closed beta test. It would be greatly appreciated.
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 pt-4">
-            <Input
-              type="email"
-              placeholder="Enter your email"
-              value={betaEmail}
-              onChange={(e) => setBetaEmail(e.target.value)}
-              className="w-full"
-            />
-            <Button
-              onClick={handleJoinBeta}
-              disabled={isSubmitting}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-6 text-base"
-            >
-              {isSubmitting ? "Sending..." : "Join Beta Test"}
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Thank You Dialog */}
-      <Dialog open={showThankYouDialog} onOpenChange={setShowThankYouDialog}>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-center">
-              🎉 Thank You!
-            </DialogTitle>
-            <DialogDescription className="text-base pt-4 text-center">
-              We've received your request to join the beta test. You'll receive an invitation via email within 24-48 hours. 
-              <br /><br />
-              We're excited to have you as part of our beta testing community!
-            </DialogDescription>
-          </DialogHeader>
-          <div className="flex flex-col gap-4 pt-4">
-            <Button
-              onClick={() => setShowThankYouDialog(false)}
-              className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-6 text-base"
-            >
-              Got it!
-            </Button>
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      <WaitlistModal 
+      <WaitlistModal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
         onEmailCapture={onEmailCapture}
