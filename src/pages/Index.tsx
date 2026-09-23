@@ -1,11 +1,9 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
 import { HeroSection } from "@/components/HeroSection";
 import { PainSection } from "@/components/PainSection";
 import { OutcomeSection } from "@/components/OutcomeSection";
 import { ProductSection } from "@/components/ProductSection";
 import { ContactForm } from "@/components/ContactForm";
-import { AnimatedSection } from "@/components/ui/animated-section";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
 import { Link } from "react-router-dom";
@@ -47,26 +45,18 @@ const Index = () => {
 
 
       {/* Product Introduction Section */}
-      <AnimatedSection delay={0.1} direction="up">
-        <ProductSection />
-      </AnimatedSection>
+      <ProductSection />
 
       {/* Pain Points Section */}
-      <AnimatedSection delay={0.2} direction="up">
-        <PainSection />
-      </AnimatedSection>
+      <PainSection />
 
       {/* Desired Outcomes Section */}
-      <AnimatedSection delay={0.3} direction="up">
-        <OutcomeSection />
-      </AnimatedSection>
+      <OutcomeSection />
 
 
 
       {/* Contact Form */}
-      <AnimatedSection delay={0.2} direction="up">
-        <ContactForm />
-      </AnimatedSection>
+      <ContactForm />
 
       {/* Footer */}
       <footer 

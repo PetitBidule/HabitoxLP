@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { AnimatedSection, AnimatedText } from "@/components/ui/animated-section";
 import { WaitlistModal } from "@/components/ui/waitlist-modal";
 import { Menu } from "lucide-react";
 import {
@@ -160,50 +159,44 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
       
       <div className="flex-1 flex flex-col items-center justify-center px-6 py-20">
         <div className="text-center mb-16 max-w-4xl">
-          <AnimatedSection delay={0.3} direction="up">
-            <AnimatedText delay={0.4} className="block">
-              <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
-                <span className="text-white
+          <h1 className="text-5xl sm:text-6xl lg:text-7xl font-bold text-gray-900 mb-8">
+            <span className="text-white
  bg-green-400 px-2 py-1 rounded-sm">Simplify</span> your habits
-              </h1>
-            </AnimatedText>
-          </AnimatedSection>
+          </h1>
 
-          <AnimatedSection delay={0.6} direction="up">
-            <div className="flex justify-center gap-4 flex-wrap">
-              <button 
-                className="transition-transform hover:scale-105 active:scale-95"
-                onClick={handleAppStoreClick}
-                aria-label="Télécharger sur l'App Store"
-              >
-                <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
-                    <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
-                  </svg>
-                  <div className="flex flex-col items-start text-white">
-                    <span className="text-[10px] font-normal leading-tight">Download on the</span>
-                    <span className="text-xl font-semibold leading-tight tracking-tight">App Store</span>
-                  </div>
-                </div>
-              </button>
-
-              <button 
-                className="transition-transform hover:scale-105 active:scale-95"
-                onClick={handlePlayStoreClick}
-                aria-label="Télécharger sur Google Play"
-              >
-                <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors relative">
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
-                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                  </svg>
-                  <div className="flex flex-col items-start text-white">
-                    <span className="text-[10px] font-normal leading-tight">GET IT ON</span>
-                    <span className="text-xl font-semibold leading-tight tracking-tight">Google Play</span>
-                  </div>
-                </div>
-              </button>
+          <div className="flex justify-center gap-4 flex-wrap">
+          <button 
+            className="transition-transform hover:scale-105 active:scale-95"
+            onClick={handleAppStoreClick}
+            aria-label="Télécharger sur l'App Store"
+          >
+            <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors">
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
+                <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/>
+              </svg>
+              <div className="flex flex-col items-start text-white">
+                <span className="text-[10px] font-normal leading-tight">Download on the</span>
+                <span className="text-xl font-semibold leading-tight tracking-tight">App Store</span>
+              </div>
             </div>
-          </AnimatedSection>
+          </button>
+
+          <button 
+            className="transition-transform hover:scale-105 active:scale-95"
+            onClick={handlePlayStoreClick}
+            aria-label="Télécharger sur Google Play"
+          >
+            <div className="bg-black rounded-xl px-6 py-3 flex items-center gap-3 shadow-lg hover:bg-gray-900 transition-colors relative">
+              <svg className="w-10 h-10" viewBox="0 0 24 24" fill="white">
+                <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+              </svg>
+              <div className="flex flex-col items-start text-white">
+                <span className="text-[10px] font-normal leading-tight">GET IT ON</span>
+                <span className="text-xl font-semibold leading-tight tracking-tight">Google Play</span>
+              </div>
+            </div>
+          </button>
+          </div>
         </div>
 
         <div className="w-full overflow-hidden">
