@@ -124,6 +124,8 @@
 
   html {
     scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
   }
 
   body {
@@ -133,21 +135,9 @@
     -moz-osx-font-smoothing: grayscale;
   }
 
-  /* Custom scrollbar for webkit browsers */
-  ::-webkit-scrollbar {
-    width: 8px;
-  }
-
-  ::-webkit-scrollbar-track {
-    @apply bg-muted;
-  }
-
-  ::-webkit-scrollbar-thumb {
-    @apply bg-primary/30 rounded-full;
-  }
-
-  ::-webkit-scrollbar-thumb:hover {
-    @apply bg-primary/50;
+  /* Hide page scrollbar (scrolling still works) */
+  html::-webkit-scrollbar {
+    display: none;
   }
 
   /* Focus styles */

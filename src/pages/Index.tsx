@@ -5,7 +5,6 @@ import { PainSection } from "@/components/PainSection";
 import { OutcomeSection } from "@/components/OutcomeSection";
 import { ProductSection } from "@/components/ProductSection";
 import { ContactForm } from "@/components/ContactForm";
-import { ScrollProgress } from "@/components/ui/scroll-progress";
 import { AnimatedSection } from "@/components/ui/animated-section";
 import { supabase } from "@/lib/supabase";
 import { toast } from "@/hooks/use-toast";
@@ -41,9 +40,6 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Scroll Progress Bar */}
-      <ScrollProgress />
-      
       {/* Hero Section */}
       <HeroSection 
         onEmailCapture={handleEmailCapture}

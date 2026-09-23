@@ -50,8 +50,7 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
     { src: "/Apple iPhone 16 Pro Max Screenshot 1.png" }, 
     { src: "/Apple iPhone 16 Pro Max Screenshot 2.png" }, 
     { src: "/Apple iPhone 16 Pro Max Screenshot 3.png" }, 
-    { src: "/Apple iPhone 16 Pro Max Screenshot 4.png" }, 
-    { src: "/Apple iPhone 16 Pro Max Screenshot 5.png" }, 
+    { src: "/Apple iPhone 16 Pro Max Screenshot 4.png" },
   ];
 
   return (
@@ -117,14 +116,6 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
               >
                 Contact
               </motion.button>
-              <motion.button
-                className="text-sm bg-gray-100 hover:bg-gray-200 text-gray-900 px-4 py-2 rounded-md transition-colors duration-200 font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={handleAppStoreClick}
-              >
-                Download
-              </motion.button>
             </nav>
 
             {/* Mobile Menu */}
@@ -160,12 +151,6 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
                   >
                     Contact
                   </button>
-                  <Button
-                    className="w-full bg-gray-100 hover:bg-gray-200 text-gray-900 font-medium"
-                    onClick={handleAppStoreClick}
-                  >
-                    Download
-                  </Button>
                 </nav>
               </SheetContent>
             </Sheet>
@@ -239,7 +224,6 @@ export const HeroSection = ({ onEmailCapture }: HeroSectionProps) => {
                   delay: 0.2,
                   ease: "easeOut"
                 }}
-                whileHover={{ scale: 1.05, y: -10, transition: { duration: 0.2 } }}
               >
                 <div 
                   style={{ 
