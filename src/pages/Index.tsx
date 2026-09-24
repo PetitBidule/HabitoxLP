@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { HeroSection } from "@/components/HeroSection";
 import { PainSection } from "@/components/PainSection";
-import { OutcomeSection } from "@/components/OutcomeSection";
 import { ProductSection } from "@/components/ProductSection";
 import { ContactForm } from "@/components/ContactForm";
 import { supabase } from "@/lib/supabase";
@@ -49,9 +48,6 @@ const Index = () => {
 
       {/* Pain Points Section */}
       <PainSection />
-
-      {/* Desired Outcomes Section */}
-      <OutcomeSection />
 
 
 
