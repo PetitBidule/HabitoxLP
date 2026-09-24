@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Lock, MessageCircle, Layers, CheckCircle2, Palette, Calendar, BarChart3, Home, Trophy } from "lucide-react";
+import { Lock, MessageCircle, Layers } from "lucide-react";
 
 const mockupImages = [
   "/Apple iPhone 16 Pro Max Screenshot 1.png",
@@ -9,38 +9,32 @@ const mockupImages = [
   "/Apple iPhone 16 Pro Max Screenshot 5.png",
 ];
 
+// Screenshots ship with a white background around the device frame: clip to the phone outline
+const phoneClip = (top: string) => ({ clipPath: `inset(${top} 5.8% 0 5.8% round 13% / 6%)` });
+
 export const ProductSection = () => {
   const features = [
     {
-      icon: CheckCircle2,
-      title: "Track Your Habits",
-      description: "Easily track your daily habits with simple and intuitive calendars."
+      title: "Track",
+      description: "Mark your session in one tap and watch your calendar fill up day after day.",
+      image: mockupImages[0],
+      clipTop: "11.9%",
+      gradient: "from-emerald-50 to-emerald-100",
     },
     {
-      icon: Palette,
-      title: "Customization",
-      description: "Customise your habits and experience with themes, icons, colours, and settings tailored to your preferences."
+      title: "Customize",
+      description: "Pick an icon, a color and a schedule that fit your habit and your life.",
+      image: mockupImages[3],
+      clipTop: "12.8%",
+      gradient: "from-orange-50 to-rose-100",
     },
     {
-      icon: Calendar,
-      title: "Calendar",
-      description: "Visualise your progress through an interactive calendar and discover your streaks of success."
+      title: "Achievements",
+      description: "Unlock badges as your routine grows, from your first seed to a full forest.",
+      image: mockupImages[2],
+      clipTop: "11.9%",
+      gradient: "from-violet-50 to-violet-200",
     },
-    {
-      icon: BarChart3,
-      title: "Charts",
-      description: "Analyse your performance with comprehensive graphs and statistics."
-    },
-    {
-      icon: Home,
-      title: "Home Screen Widget",
-      description: "Keep an eye on your habits directly from your home screen with our customisable widgets."
-    },
-    {
-      icon: Trophy,
-      title: "Gamification",
-      description: "Unlock achievements and complete challenges to make tracking your habits even more motivating."
-    }
   ];
 
   const steps = [
@@ -80,36 +74,68 @@ export const ProductSection = () => {
         </div>
 
           {/* Features Section */}
-          <div className="mb-20 cursor-pointer">
-            <h3 className="text-3xl font-bold text-center text-foreground mb-4 leading-relaxed">
+          <div className="mb-20">
+            <h3 className="text-3xl font-bold text-center text-foreground mb-12 leading-relaxed">
               Big on Features.
               <br />
               Deceptively Simple.
             </h3>
-            
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {features.map((feature, index) => {
-                const IconComponent = feature.icon;
-                return (
-                  <Card key={index} className="bg-card border-border hover:shadow-lg transition-shadow">
-                    <CardContent className="p-6">
-                      <div className="flex items-start gap-4">
-                        <div className="w-12 h-12 bg-gradient-primary rounded-xl flex items-center justify-center flex-shrink-0">
-                          <IconComponent className="w-6 h-6 text-primary-foreground" />
-                        </div>
-                        <div>
-                          <h4 className="text-lg font-bold text-foreground mb-2">
-                            {feature.title}
-                          </h4>
-                          <p className="text-sm text-muted-foreground leading-relaxed">
-                            {feature.description}
-                          </p>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                );
-              })}
+
+            <div className="grid md:grid-cols-3 gap-4">
+              {features.map((feature) => (
+                <div
+                  key={feature.title}
+                  className={`relative flex flex-col rounded-3xl overflow-hidden bg-gradient-to-b ${feature.gradient}`}
+                >
+                  <div className="px-7 pt-8">
+                    <h4 className="text-2xl font-semibold text-foreground mb-2">
+                      {feature.title}
+                    </h4>
+                    <p className="text-sm font-medium text-muted-foreground leading-relaxed">
+                      {feature.description}
+                    </p>
+                  </div>
+                  <div className="relative h-[340px] mt-6 overflow-hidden">
+                    <img
+                      src={feature.image}
+                      alt={`HabitoX - ${feature.title}`}
+                      style={phoneClip(feature.clipTop)}
+                      className="absolute left-1/2 -translate-x-1/2 -top-12 w-[250px] max-w-none"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+              ))}
+
+              {/* Wide card */}
+              <div className="md:col-span-3 grid md:grid-cols-2 items-center rounded-3xl overflow-hidden bg-gradient-to-br from-sky-50 via-indigo-50 to-violet-100">
+                <div className="px-7 pt-10 md:py-16 md:pl-14">
+                  <h4 className="text-4xl lg:text-5xl font-semibold text-foreground leading-tight mb-4">
+                    See your progress
+                    <br />
+                    at a glance
+                  </h4>
+                  <p className="text-base font-medium text-muted-foreground leading-relaxed max-w-sm">
+                    Every habit gets its own history, so your streaks speak for themselves. And when you reach your goal, we celebrate it with you.
+                  </p>
+                </div>
+                <div className="relative h-[380px] md:h-[440px] overflow-hidden">
+                  <img
+                    src="/Apple iPhone 16 Pro Max Screenshot 2.png"
+                    alt="HabitoX - Habits overview"
+                    style={phoneClip("11.9%")}
+                    className="absolute left-[8%] md:left-[6%] -top-10 md:top-6 w-[220px] md:w-[250px] max-w-none"
+                    loading="lazy"
+                  />
+                  <img
+                    src="/Apple iPhone 16 Pro Max Screenshot 5.png"
+                    alt="HabitoX - Objective completed"
+                    style={phoneClip("12.8%")}
+                    className="absolute left-[48%] md:left-[50%] top-8 md:top-20 w-[220px] md:w-[250px] max-w-none"
+                    loading="lazy"
+                  />
+                </div>
+              </div>
             </div>
           </div>
 
