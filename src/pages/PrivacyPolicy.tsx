@@ -1,5 +1,6 @@
 
 import { Link } from "react-router-dom";
+import { Footer } from "@/components/Footer";
 
 const PrivacyPolicy = () => {
   return (
@@ -50,39 +51,7 @@ const PrivacyPolicy = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="bg-foreground text-background py-12 mt-auto">
-        <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center">
-            <div className="grid md:grid-cols-2 gap-8 mb-8">
-              <div>
-                <h3 className="text-lg font-semibold mb-4">HabitoX</h3>
-                <p className="text-background/80 text-sm leading-relaxed">
-                  The revolutionary habit system that guarantees success by focusing on ONE habit at a time.
-                </p>
-              </div>
-              <div>
-                <h3 className="text-lg font-semibold mb-4">Support</h3>
-                <div className="space-y-2 text-sm">
-                  <p>
-                    <a href="mailto:habitoxts@gmail.com" className="text-background/80 hover:text-background transition-colors">
-                      habitoxts@gmail.com
-                    </a>
-                  </p>
-                </div>
-              </div>
-            </div>
-            <div className="border-t border-background/20 pt-8">
-              <p className="text-background/60 text-sm">
-                © 2025 HabitoX. All rights reserved. | 
-                <Link to="/privacy" className="hover:text-background ml-1">Privacy Policy</Link> | 
-                <Link to="/terms" className="hover:text-background ml-1">Terms of Service</Link> |
-                <Link to="/help" className="hover:text-background ml-1">Help</Link>
-              </p>
-            </div>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
